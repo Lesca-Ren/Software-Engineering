@@ -1,6 +1,8 @@
 # Software-Engineering
 
-Hi Humans!
+cmd环境下执行命令
+首先，进入文件目录
 
-Hubot here,I like Node.js and Coffeescipt(that's what I'm made of!).
-I've had tacos on the moon and find far superior to Earch tacos.
+javac ReadTxt.java -encoding utf-8
+
+java ReadTxt data.txt
