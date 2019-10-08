@@ -99,19 +99,43 @@ public class FirstStep {
             function2(Integer.valueOf(args[1]));
         }else if(f.equals("-d")){
             if(args[1].equals("-s")){
-
+                File dirFile = new File(args[2]);
+                listAll(dirFile,0);
             }else{
                 File dirFile = new File(args[1]);
                 FileAccept fileAccept = new FileAccept();
                 fileAccept.setExtendName("txt");
                 String fileName [] = dirFile.list(fileAccept);
                 for(String name:fileName){
-                    readFile(name);
+                    // System.out.println(name);
+                    readFile(dirFile+"/"+name);
                 }
             }
         }
     }
 
+    public static void listAll(File dir,int level){
+        System.out.println(getSpace(level)+dir.getName());
+        level++;//每调用一次，level加1
+        File[] files=dir.listFiles();//获取指定目录下当前的所有文件夹或者文件对象
+        for(int x=0;x<files.length;x++){
+            if(files[x].isDirectory()){
+                listAll(files[x], level);
+            }else{
+                System.out.println(getSpace(level)+files[x].getName());
+            }
+        }
+
+    }
+    
+    public static String getSpace(int level){
+        StringBuilder sb = new StringBuilder();
+        sb.append("|--");
+        for(int x= 0;x<level;x++){
+            sb.insert(0,"|  ");
+        }
+        return sb.toString();
+    }
     
     public static void readFile(String args) {
         String pathname = args; 
