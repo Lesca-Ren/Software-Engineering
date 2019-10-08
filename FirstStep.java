@@ -70,17 +70,46 @@ public class FirstStep {
         } 
     }
 
+    public static class FileAccept implements FilenameFilter{
+        private String extendName;
+        public void setExtendName(String s){
+            extendName = "."+s;
+        }
+        public boolean accept(File dir,String name){
+            return name.endsWith(extendName);
+        }
+    }
     public static HashMap<String,Integer> hm = new HashMap<String,Integer>();
 
     public static node[] res;
     
     public static void main(String args[]) {
-        String s=new String(args[0]);
+        String f=new String(args[0]);
         res = new node[20004];
         for(int i=0;i<=20000;i++){
             res[i] = new node();
         }
-        readFile(s);
+        if(f.equals("-f")){
+            String s=new String(args[1]);
+            readFile(s);
+            function1();
+        }else if(f.equals("-n")){
+            String s=new String(args[2]);
+            readFile(s);
+            function2(Integer.valueOf(args[1]));
+        }else if(f.equals("-d")){
+            if(args[1].equals("-s")){
+
+            }else{
+                File dirFile = new File(args[1]);
+                FileAccept fileAccept = new FileAccept();
+                fileAccept.setExtendName("txt");
+                String fileName [] = dirFile.list(fileAccept);
+                for(String name:fileName){
+                    readFile(name);
+                }
+            }
+        }
     }
 
     
@@ -116,6 +145,9 @@ public class FirstStep {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void function1(){
         Iterator iter = hm.entrySet().iterator();
         int index=0;
         while (iter.hasNext()) {
@@ -132,6 +164,25 @@ public class FirstStep {
             System.out.println("key:"+res[i].getKey()+" "+"val:"+res[i].getVal());
         }
     }
+
+    public static void function2(int n){
+        Iterator iter = hm.entrySet().iterator();
+        int index=0;
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            Object key = entry.getKey();
+            Object val = entry.getValue();
+            res[index].setKey(key.toString());
+            res[index].setVal(Integer.valueOf(val.toString()));
+            // System.out.println("key:"+res[index].getKey()+" "+"val:"+res[index].getVal());
+            index++;
+        }
+        Arrays.sort(res,0,index);
+        for(int i=0;i<n;i++){
+            System.out.println("key:"+res[i].getKey()+" "+"val:"+res[i].getVal());
+        }
+    }
+
 }
 
 
