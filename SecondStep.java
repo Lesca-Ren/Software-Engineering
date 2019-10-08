@@ -83,6 +83,7 @@ public class SecondStep {
 
     public static node[] res;
     public static String [] stopwords;
+    public static int stopWordsLength;
     
     public static void main(String args[]) {
         String f=new String(args[0]);
@@ -174,7 +175,9 @@ public class SecondStep {
     }
 
     public static boolean findStopWords(String t){
-        for(int i = 0;i<stopwords.length;i++){
+        // System.out.println(stopWordsLength);
+        for(int i = 0;i<stopWordsLength;i++){
+            // System.out.println(stopwords[i].equals(t));
             if(stopwords[i].equals(t)){
                 return true;
             }
@@ -232,6 +235,7 @@ public class SecondStep {
             // System.out.println("key:"+stopwords[index]);
             index++;
         }
+        stopWordsLength = index--;
     }
 
 }
