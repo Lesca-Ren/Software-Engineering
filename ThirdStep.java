@@ -58,7 +58,10 @@ public class ThirdStep {
        }
        @Override
         public int compareTo(node a) {
-            if(this.val-a.val != 0)
+            if(this.num-a.num != 0){
+                return a.num-this.num;
+            }
+            else if(this.val-a.val != 0)
                 return a.val-this.val; 
             else{
                 char[] chars1=a.key.toCharArray();
@@ -292,8 +295,11 @@ public class ThirdStep {
             }
         }
         Arrays.sort(res,0,index);
-        for(int i=0;i<n;i++){
-            System.out.println("key:"+res[i].getKey()+" "+"val:"+res[i].getVal());
+        for(int i=0;i<index;i++){
+            if(res[i].getNum() == n){
+                System.out.println("key:"+res[i].getKey()+" "+"val:"+res[i].getVal()+" num:"+res[i].getNum());
+            }
+            
         }
     }
 }
