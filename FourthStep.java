@@ -1,6 +1,7 @@
 import java.io.*;
 import java.lang.reflect.Array;
 import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
  
@@ -178,16 +179,20 @@ public class FourthStep {
             function2(readFile(s),Integer.valueOf(args[1]));
         }else if(f.equals("-d")){
             if(args[1].equals("-s")){
-                File dirFile = new File(args[2]);
-                listAll(dirFile,0);
+                ArrayList<String> listFileName = new ArrayList<String>();
+                getAllFileName(args[1],listFileName);
+                for(String name:listFileName){
+                    if(name.contains(".txt")){
+                        function1(readFile(name));
+                    }
+                }
             }else{
-                File dirFile = new File(args[1]);
-                FileAccept fileAccept = new FileAccept();
-                fileAccept.setExtendName("txt");
-                String fileName [] = dirFile.list(fileAccept);
-                for(String name:fileName){
-                    // System.out.println(name);
-                    readFile(dirFile+"/"+name);
+                ArrayList<String> listFileName = new ArrayList<String>();
+                getAllFileName(args[1],listFileName);
+                for(String name:listFileName){
+                    if(name.contains(".txt")){
+                        function1(readFile(name));
+                    }
                 }
             }
         }else if(f.equals("-x")){
@@ -519,6 +524,26 @@ public class FourthStep {
         }
         return false;
     }
+    
+    public static void getAllFileName(String path,ArrayList<String> listFileName){
+        File file = new File(path);
+        File [] files = file.listFiles();
+        String [] names = file.list();
+        if(names != null){
+        String [] completNames = new String[names.length];
+        for(int i=0;i<names.length;i++){
+            completNames[i]=path+names[i];
+        }
+        listFileName.addAll(Arrays.asList(completNames));
+        }
+        for(File a:files){
+            if(a.isDirectory()){//如果文件夹下有子文件夹，获取子文件夹下的所有文件全路径。
+                getAllFileName(a.getAbsolutePath()+"\\",listFileName);
+            }
+        }
+    }
+
+
     public static void function1(HashMap<String,Integer> hm){
         Iterator iter = hm.entrySet().iterator();
         int index=0;
